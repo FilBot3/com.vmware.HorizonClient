@@ -1,0 +1,36 @@
+---
+app-id: com.vmware.HorizonClient
+runtime: org.gnome.Platform
+runtime-version: '40'
+sdk: org.gnome.Sdk
+desktop-file-name-suffix: ' (Flatpak)'
+command: vmware-view
+build-options:
+  env:
+    TERM: dumb
+    VMWARE_EULAS_AGREED: yes
+modules:
+  - name: vmware-horizon-client
+    buildsystem: simple
+    sources:
+      - type: file
+        url: "https://download3.vmware.com/software/view/viewclients/CART22FQ2/VMware-Horizon-Client-2106.1-8.3.1-18435609.x64.bundle"
+        sha256: '5fc0ac3fc08f948065beb1212de8cc5d77817cdbc661f02c9a0f2f3c56e7fb85'
+        dest-filename: VMWare-Horizon-Client.bundle
+    build-commands:
+      - chmod 755 VMWare-Horizon-Client.bundle
+      - "./VMWare-Horizon-Client.bundle \
+          --console \
+          --set-setting vmware-horizon-usb usbEnable no \
+          --set-setting vmware-horizon-smartcard smartcardEnable no \
+          --set-setting vmware-horizon-rtav rtavEnable yes \
+          --set-setting vmware-horizon-tsdr tsdrEnable yes \
+          --set-setting vmware-horizon-scannerclient scannerEnable yes \
+          --set-setting vmware-horizon-serialportclient serialportEnable yes \
+          --set-setting vmware-horizon-mmr mmrEnable yes \
+          --set-setting vmware-horizon-media-provider mediaproviderEnable yes \
+          --set-setting vmware-horizon-teams-optimization teamsOptimizationEnable yes"
+finish-args:
+  - '--share=network'
+  - '--filesystem=home:create'
+...

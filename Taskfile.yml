@@ -1,0 +1,20 @@
+---
+# https://taskfile.dev
+version: '3'
+
+tasks:
+  sdk:
+    desc: Download the SDK and Platform
+    cmds:
+      - flatpak --user install org.gnome.Platform//40 org.gnome.Sdk//40 --assumeyes
+  build:
+    desc: Build the Flatpak
+    cmds:
+      - flatpak-builder --repo=repo --force-clean build-dir com.vmware.HorizonClient.yaml
+
+  clean:
+    desc: Delete artifacts
+    cmds:
+      - rm -rf .flatpak-builder
+      - rm -rf build-dir
+...

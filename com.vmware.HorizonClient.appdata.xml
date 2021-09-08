@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+	<id>com.vmware.HorizonClient</id>
+  <developer_name>VMWare</developer_name>
+	<name>VMWare Horizon Client</name>
+	<summary>VMWare Horizon Client shipped as a Flatpak</summary>
+	<description>
+    <p>Used to access VMWare Horizon Client endpoints.</p>
+	</description>
+  <releases>
+    <release version="2106.1" date="2021-08-24">
+      <description>See https://customerconnect.vmware.com/en/downloads/details?downloadGroup=CART22FQ2_LIN64_21061&amp;productId=1027&amp;rPId=71994 for more details.</description>
+    </release>
+  </releases>
+	<categories>
+		<catagory>Development</catagory>
+	</categories>
+	<url type="homepage">https://www.vmware.com</url>
+	<metadata_license>CC0-1.0</metadata_license>
+  <content_rating type="oars-1.0" />
+</component>
