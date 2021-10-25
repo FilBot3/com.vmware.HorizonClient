@@ -9,27 +9,31 @@ build-options:
   env:
     TERM: dumb
     VMWARE_EULAS_AGREED: yes
+
 modules:
   - name: vmware-horizon-client
     buildsystem: simple
     sources:
       - type: file
-        url: "https://download3.vmware.com/software/view/viewclients/CART22FQ2/VMware-Horizon-Client-2106.1-8.3.1-18435609.x64.bundle"
-        sha256: '5fc0ac3fc08f948065beb1212de8cc5d77817cdbc661f02c9a0f2f3c56e7fb85'
-        dest-filename: VMWare-Horizon-Client.bundle
+        url: "https://download3.vmware.com/software/view/viewclients/CART22FQ2/VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609.tar.gz"
+        sha256: 'b42ddb9d7e9c8d0f8b86b69344fcfca45251c5a5f1e06a18a3334d5a04e18c39'
+        dest-filename: VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609.tar.gz
     build-commands:
-      - chmod 755 VMWare-Horizon-Client.bundle
-      - "./VMWare-Horizon-Client.bundle \
-          --console \
-          --set-setting vmware-horizon-usb usbEnable no \
-          --set-setting vmware-horizon-smartcard smartcardEnable no \
-          --set-setting vmware-horizon-rtav rtavEnable yes \
-          --set-setting vmware-horizon-tsdr tsdrEnable yes \
-          --set-setting vmware-horizon-scannerclient scannerEnable yes \
-          --set-setting vmware-horizon-serialportclient serialportEnable yes \
-          --set-setting vmware-horizon-mmr mmrEnable yes \
-          --set-setting vmware-horizon-media-provider mediaproviderEnable yes \
-          --set-setting vmware-horizon-teams-optimization teamsOptimizationEnable yes"
+      - tar -xf VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609.tar.gz
+      - tar -xf VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609/x64/VMware-Horizon-Client-2106.1-8.3.1-18435609.x64.tar.gz
+      - cd ./VMware-Horizon-Client-2106.1-8.3.1-18435609.x64 && find ./* -type f -exec install -Dm 755 {} /usr/{} \;
+      - rm -rf VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609*
+
+  - name: executables
+    buildsystem: simple
+    sources:
+      - type: script
+        commands:
+          - /usr/bin/vmware-view
+        dest-filename: vmware-view
+    build-commands:
+      - mv vmware-view /app/bin/vmware-view
+
 finish-args:
   - '--share=network'
   - '--filesystem=home:create'
