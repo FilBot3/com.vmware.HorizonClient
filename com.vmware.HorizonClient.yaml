@@ -1,7 +1,7 @@
 ---
 app-id: com.vmware.HorizonClient
 runtime: org.gnome.Platform
-runtime-version: '40'
+runtime-version: '41'
 sdk: org.gnome.Sdk
 desktop-file-name-suffix: ' (Flatpak)'
 command: vmware-view
@@ -10,7 +10,85 @@ build-options:
     TERM: dumb
     VMWARE_EULAS_AGREED: yes
 
-modules:
+modules:           
+  - name: mm-common
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/mm-common/1.0/mm-common-1.0.3.tar.xz
+        sha256: e81596625899aacf1d0bf27ccc2fcc7f373405ec48735ca1c7273c0fbcdc1ef5
+
+  - name: sigc++-2
+    config-opts:
+      - --disable-documentation
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/libsigc++/2.10/libsigc++-2.10.7.tar.xz
+        sha256: d082a2ce72c750f66b1a415abe3e852df2eae1e8af53010f4ac2ea261a478832
+
+  - "name": "cairomm"
+    "config-opts": 
+      - "--disable-documentation"    
+    "cleanup":
+      - "/lib/cairomm-1.0"
+    "sources":            
+      - "type": "archive"
+        "url": "https://www.cairographics.org/releases/cairomm-1.14.3.tar.xz"
+        "sha256": "0d37e067c5c4ca7808b7ceddabfe1932c5bd2a750ad64fb321e1213536297e78"
+        
+  - name: glibmm
+    cleanup:
+      - /lib/glibmm-2.4
+    buildsystem: meson
+    config-opts:
+      - -Dbuild-documentation=false
+      - -Dbuild-examples=false
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/glibmm/2.66/glibmm-2.66.1.tar.xz
+        sha256: 69bd6b5327716ca2f511ab580a969fd7bf0cd2c24ce15e1d0e530592d3ff209c
+
+  - name: "pangomm"
+    "buildsystem": "meson"
+    "config-opts":
+      - "-Dbuild-documentation=false"
+    "sources":
+      - "type": "archive"
+        "url": "https://download.gnome.org/sources/pangomm/2.46/pangomm-2.46.1.tar.xz"
+        "sha256": "c885013fe61a4c5117fda395770d507563411c63e49f4a3aced4c9efe34d9975"
+    
+  - "name": "atkmm"
+    "buildsystem": "meson"
+    "config-opts": 
+      - "-Dbuild-documentation=false"
+    "cleanup": 
+      - "/lib/atkmm-1.6"
+    "sources": 
+      - "type": "archive"
+        "url": "https://download.gnome.org/sources/atkmm/2.28/atkmm-2.28.2.tar.xz"
+        "sha256": "a0bb49765ceccc293ab2c6735ba100431807d384ffa14c2ebd30e07993fd2fa4"
+
+  - "name" : "gtkmm"
+    "buildsystem": "meson"
+    "config-opts": 
+      - "-Dbuild-documentation=false"
+    "cleanup": 
+      - "/lib/gtkmm-3.0"
+    "sources" :
+      - "type" : "archive"
+        "url" : "https://download.gnome.org/sources/gtkmm/3.24/gtkmm-3.24.5.tar.xz"
+        "sha256" : "856333de86689f6a81c123f2db15d85db9addc438bc3574c36f15736aeae22e6"
+  
+  - "name": "libudev1"
+    "buildsystem": "autotools"
+    "sources": 
+      - "type": "archive"
+        "url": "https://github.com/gentoo/eudev/archive/v3.2.7.tar.gz"
+        "sha512": "17c1894c6e85ddcef259e3e10c21ff7f36567dec377c279cc423c14957d3de97c88aa6eb4cab7cab5ffbdbf80cc63b52af8da592bf226affd21dd9edb74203ed"
+        "sha256": "ce2fda4dea129bbcf824c947aab23504bcd26911481b47dbaf10646f723083a4"
+
+  #- "shared-modules/gudev/gudev.json"
+
   - name: vmware-horizon-client
     buildsystem: simple
     sources:
@@ -23,7 +101,7 @@ modules:
     build-commands:
       - chmod +x ./build.sh
       - ./build.sh
-
+   
 finish-args:
   - '--share=network'
   - '--filesystem=home:create'
