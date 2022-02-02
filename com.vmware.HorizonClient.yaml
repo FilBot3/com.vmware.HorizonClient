@@ -17,22 +17,12 @@ modules:
       - type: file
         url: "https://download3.vmware.com/software/view/viewclients/CART22FQ2/VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609.tar.gz"
         sha256: 'b42ddb9d7e9c8d0f8b86b69344fcfca45251c5a5f1e06a18a3334d5a04e18c39'
-        dest-filename: VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609.tar.gz
+        dest-filename: VMware-Horizon-Linux.tar.gz
+      - type: file
+        path: build.sh
     build-commands:
-      - tar -xf VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609.tar.gz
-      - tar -xf VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609/x64/VMware-Horizon-Client-2106.1-8.3.1-18435609.x64.tar.gz
-      - cd ./VMware-Horizon-Client-2106.1-8.3.1-18435609.x64 && find ./* -type f -exec install -Dm 755 {} /usr/{} \;
-      - rm -rf VMware-Horizon-Client-Linux-2106.1-8.3.1-18435609*
-
-  - name: executables
-    buildsystem: simple
-    sources:
-      - type: script
-        commands:
-          - /usr/bin/vmware-view
-        dest-filename: vmware-view
-    build-commands:
-      - mv vmware-view /app/bin/vmware-view
+      - chmod +x ./build.sh
+      - ./build.sh
 
 finish-args:
   - '--share=network'
