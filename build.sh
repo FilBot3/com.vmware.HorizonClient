@@ -11,13 +11,19 @@ mkdir $MAIN_DIR
 tar -xf "VMware-Horizon-Linux.tar.gz" -C $MAIN_DIR --strip-components 1
 
 
-echo "Extracting client"
+#echo "Extracting client"
 
-tar -xf "$MAIN_DIR/x64/VMware-Horizon-Client-${VERSION}.x64.tar.gz"  -C /app/ --strip-components 1
+#tar -xf "$MAIN_DIR/x64/VMware-Horizon-Client-${VERSION}.x64.tar.gz"  -C /app/ --strip-components 1
 
-echo "Extracting sdk"
+#echo "Extracting sdk"
 
-tar -xf "$MAIN_DIR/x64/VMware-Horizon-Client-Linux-ClientSDK-${VERSION}.x64.tar.gz" -C /app/ --strip-components 1
+#tar -xf "$MAIN_DIR/x64/VMware-Horizon-Client-Linux-ClientSDK-${VERSION}.x64.tar.gz" -C /app/ --strip-components 1
+
+echo "Extracting Everything"
+
+cd $MAIN_DIR/x64/
+for f in *; do tar -xf "$f" -C /app/ --strip-components 1; done
+cd ..
 
 echo "Installing images etc"
 
