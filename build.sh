@@ -28,13 +28,16 @@ cd ..
 echo "Installing images etc"
 
 mkdir -p "/app/share/icons/hicolor/82x82/"
-cp "/app/share/icons/vmware-view.png" "/app/share/icons/hicolor/82x82/com.vmware.HorizonClient.png"
+mv "/app/share/icons/vmware-view.png" "/app/share/icons/hicolor/82x82/com.vmware.HorizonClient.png"
 
-cp "/app/share/applications/vmware-view.desktop" "/app/share/applications/com.vmware.HorizonClient.desktop"
+mv "/app/share/applications/vmware-view.desktop" "/app/share/applications/com.vmware.HorizonClient.desktop"
 
 echo "Modifying vmware files"
 
+
+sed -i 's+/usr/share/icons/vmware-view.png+com.vmware.HorizonClient+' "/app/share/applications/com.vmware.HorizonClient.desktop"
 sed -i 's/\/usr/\/app/' "/app/bin/vmware-view"
+
 sed -i 's+vm_append_to_library_path "$html5mmrlibPath"+vm_append_to_library_path "$html5mmrlibPath"\n   vm_append_to_library_path "/app/lib"+' "/app/bin/vmware-view"
 
 sed -i 's/\/usr/\/app/' "/app/bin/vmware-view-lib-scan"
@@ -43,6 +46,13 @@ sed -i 's/\/usr/\/app/' "/app/bin/vmware-view-log-collector"
 
 sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/env/env_utils.sh"
 sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/dct/vmware-view-log-collector"
+sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/dct/configFiles/Client.json"
+sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/dct/configFiles/Virtual_Channel/VDPService.json"
+
+for f in /app/lib/vmware/view/dct/configFiles/Remote_Features/*;
+do
+	sed -i 's/\/usr/\/app/' "$f"
+done
 
 chmod +775 "/app/lib/vmware/libjson_linux-gcc-4.1.1_libmt.so"
 
