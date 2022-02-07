@@ -44,10 +44,19 @@ sed -i 's/\/usr/\/app/' "/app/bin/vmware-view-lib-scan"
 sed -i 's/\/usr/\/app/' "/app/bin/vmware-url-filter"
 sed -i 's/\/usr/\/app/' "/app/bin/vmware-view-log-collector"
 
-sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/env/env_utils.sh"
-sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/dct/vmware-view-log-collector"
-sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/dct/configFiles/Client.json"
-sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/dct/configFiles/Virtual_Channel/VDPService.json"
+sed -i 's+/usr+/app+' "/app/lib/vmware/view/bin/vmware-view" # Relink the main binary
+sed -i 's+/usr+/app+' "/app/lib/vmware/view/env/env_utils.sh"
+sed -i 's+/usr+/app+' "/app/lib/vmware/view/dct/vmware-view-log-collector"
+sed -i 's+/usr+/app+' "/app/lib/vmware/view/dct/configFiles/Client.json"
+sed -i 's+/usr+/app+' "/app/lib/vmware/view/dct/configFiles/Virtual_Channel/VDPService.json"
+
+# Relink the compiled libraries
+for f in `find /app/lib/vmware/ -not -type d`
+do
+	sed -i 's+/usr+/app+' "$f"
+	sed -i 's+/usr+/app+' "$f"
+	sed -i 's+/usr+/app+' "$f"
+done
 
 for f in /app/lib/vmware/view/dct/configFiles/Remote_Features/*;
 do
