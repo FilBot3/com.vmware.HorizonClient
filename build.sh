@@ -15,14 +15,30 @@ echo "Extracting client"
 
 tar -xf "$MAIN_DIR/x64/VMware-Horizon-Client-${VERSION}.x64.tar.gz"  -C /app/ --strip-components 1
 
+echo "Extracting sdk"
+
+tar -xf "$MAIN_DIR/x64/VMware-Horizon-Client-Linux-ClientSDK-${VERSION}.x64.tar.gz" -C /app/ --strip-components 1
+
+echo "Installing images etc"
+
 mkdir -p "/app/share/icons/hicolor/82x82/"
 cp "/app/share/icons/vmware-view.png" "/app/share/icons/hicolor/82x82/com.vmware.HorizonClient.png"
 
 cp "/app/share/applications/vmware-view.desktop" "/app/share/applications/com.vmware.HorizonClient.desktop"
 
+echo "Modifying vmware files"
+
 sed -i 's/\/usr/\/app/' "/app/bin/vmware-view"
+sed -i 's+vm_append_to_library_path "$html5mmrlibPath"+vm_append_to_library_path "$html5mmrlibPath"\n   vm_append_to_library_path "/app/lib"+' "/app/bin/vmware-view"
+
+sed -i 's/\/usr/\/app/' "/app/bin/vmware-view-lib-scan"
+sed -i 's/\/usr/\/app/' "/app/bin/vmware-url-filter"
+sed -i 's/\/usr/\/app/' "/app/bin/vmware-view-log-collector"
+
 sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/env/env_utils.sh"
 sed -i 's/\/usr/\/app/' "/app/lib/vmware/view/dct/vmware-view-log-collector"
+
+chmod +775 "/app/lib/vmware/libjson_linux-gcc-4.1.1_libmt.so"
 
 echo "Linking"
 cd /app/lib/
