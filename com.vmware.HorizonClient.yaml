@@ -17,6 +17,7 @@ finish-args:
   - --env=GTK_THEME=Adwaita
   - --device=all
   - --persist=.vmware
+  - --filesystem=xdg-public-share
 
 modules:           
   - name: libudev1
