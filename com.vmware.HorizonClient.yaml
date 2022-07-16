@@ -19,10 +19,10 @@ finish-args:
   - --persist=.vmware
   - --filesystem=xdg-public-share
 
-modules:           
+modules:
   - name: libudev1
     buildsystem: autotools
-    sources: 
+    sources:
       - type: archive
         url: https://github.com/gentoo/eudev/archive/v3.2.11.tar.gz
         sha256: dcfc482099f3fdfcfdb9aeabbc4d609877cf4d2d0407f50ab0c59d43fff44f92
