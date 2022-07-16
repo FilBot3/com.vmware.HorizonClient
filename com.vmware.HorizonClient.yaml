@@ -1,7 +1,7 @@
 ---
 app-id: com.vmware.HorizonClient
 runtime: org.gnome.Platform
-runtime-version: '41'
+runtime-version: '42'
 sdk: org.gnome.Sdk
 desktop-file-name-suffix: ' (Flatpak)'
 command: vmware-view
@@ -19,10 +19,10 @@ finish-args:
   - --persist=.vmware
   - --filesystem=xdg-public-share
 
-modules:           
+modules:
   - name: libudev1
     buildsystem: autotools
-    sources: 
+    sources:
       - type: archive
         url: https://github.com/gentoo/eudev/archive/v3.2.11.tar.gz
         sha256: dcfc482099f3fdfcfdb9aeabbc4d609877cf4d2d0407f50ab0c59d43fff44f92
@@ -31,8 +31,8 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        url: https://download3.vmware.com/software/view/viewclients/CART22FH2/VMware-Horizon-Client-Linux-2111-8.4.0-18957622.tar.gz
-        sha256: 2f79d2d8d34e6f85a5d21a3350618c4763d60455e7d68647ea40715eaff486f7
+        url: https://download3.vmware.com/software/CART23FQ3_LIN_2209_TARBALL/VMware-Horizon-Client-Linux-2209-8.7.0-20616018.tar.gz
+        sha256: 222b645318cb67484a68810fae1209041462c1c8fb2b3e1a45f219dfba57c374
         dest-filename: VMware-Horizon-Linux.tar.gz
       - type: file
         path: com.vmware.HorizonClient.appdata.xml
